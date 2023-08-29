@@ -3,7 +3,8 @@
     text-align: center;
 }
 .hotelcard{
-    background-color: #0394fc;
+    /* background-color: #0394fc; */
+    background-color: #76bbf5;
     width: 50%;
 }
 .hotelcardheader,.departcardheader{
@@ -35,3 +36,69 @@
     margin-bottom: 20px;
     padding: 10px;
   }
+
+  .bg-gradient{
+    background-image: linear-gradient(
+        15deg,
+        hsl(255deg 86% 72%) 0%,
+        hsl(249deg 89% 74%) 26%,
+        hsl(242deg 92% 75%) 39%,
+        hsl(236deg 94% 75%) 48%,
+        hsl(230deg 95% 74%) 55%,
+        hsl(226deg 95% 74%) 61%,
+        hsl(223deg 95% 73%) 68%,
+        hsl(220deg 93% 73%) 75%,
+        hsl(217deg 91% 72%) 82%,
+        hsl(215deg 89% 72%) 91%,
+        hsl(213deg 86% 72%) 100%
+      )!important;
+  }
+.nav-bg{
+    background-image:linear-gradient(
+        3deg,
+        hsl(255deg 86% 72%) 0%,
+        hsl(249deg 89% 74%) 11%,
+        hsl(242deg 92% 75%) 24%,
+        hsl(236deg 94% 75%) 38%,
+        hsl(230deg 95% 74%) 52%,
+        hsl(226deg 95% 74%) 64%,
+        hsl(223deg 95% 73%) 74%,
+        hsl(220deg 93% 73%) 82%,
+        hsl(217deg 91% 72%) 89%,
+        hsl(215deg 89% 72%) 95%,
+        hsl(213deg 86% 72%) 100%
+      )
+}
+  .loginform input{
+    border: none;
+    border-bottom: 2px solid #9979f6;
+    border-radius: 0px;
+    color: #9979f6;
+  }
+  .form-control::placeholder {
+    color:#9979f6;
+    opacity: 1;
+}
+
+.px-6{
+    padding-right: 60px;padding-left: 60px;
+}
+
+.nav-bg p a span{
+    color: #fff  !important;
+    font-size: 18px;
+    
+}
+
+.nav-bg p a{padding-top: 15px;}
+
+
+
+.registrationform_Hotel input{
+    width: 45%;
+    border: none;
+    border-bottom: 2px solid #9979f6;
+    border-radius: 0px;
+    color: #9979f6;
+    
+}

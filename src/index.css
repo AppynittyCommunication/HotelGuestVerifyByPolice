@@ -74,14 +74,15 @@ body, html, .App, #root, .auth-wrapper {
   margin: 0;
 }
 .forgot-password a {
-  color: #167bff;
+  color: #9979f6;
+  font-weight: 600;
 }
 
 .loginform{
   width: 36%;
   background-color: #ffffff;
   margin-left: 35%;
-  margin-top: 5%;
+  margin-top: 2%;
   padding: 3%;
   text-align: center;
   border-radius: 5%;
@@ -96,6 +97,17 @@ body, html, .App, #root, .auth-wrapper {
   border-radius: 5%;
 }
 .hlbtn-gb{
-  background-color: #9851e7 !important;
-  border-color: #9851e7 !important;
+  background-color: #9979f6 !important;
+  border-color: #9979f6!important;
+  font-weight: 700 !important;
+ 
+}
+.registrationform_Hotel{
+  width: 100%;
+  background-color: #ffffff;
+  /* margin-left: 35%;
+  margin-top: 5%; */
+  padding: 3%;
+  text-align: center;
+  border-radius: 1%;
 }

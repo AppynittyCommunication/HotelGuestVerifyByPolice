@@ -10,7 +10,7 @@ const MaybeShowNavbar = ({children}) => {
         // console.log("this is location: ", location)
 
         if(location.pathname === '/DepartmentRegistration' || location.pathname === '/DepartmentLogin'
-         || location.pathname === '/HotelRegistration' || location.pathname === '/HotelLogin' || location.pathname === '/HotelLoginSuccess'){
+         || location.pathname === '/HotelRegistration' || location.pathname === '/hotelLogin' || location.pathname === '/HotelLoginSuccess'){
             setShowNavBar(false)
         }
         else{
