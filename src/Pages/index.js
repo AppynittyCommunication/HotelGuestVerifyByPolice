@@ -10,7 +10,7 @@ return (
 		<div className='container homewelcome'>
 			<div className='row'>
 			<div>
-				 <h4>Welcome</h4>
+				 <h1>Welcome</h1>
 			</div>
 			</div>
 		</div>
