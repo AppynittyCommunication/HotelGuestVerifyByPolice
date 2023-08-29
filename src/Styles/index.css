@@ -1,0 +1,37 @@
+.homewelcome{
+    margin-top: 8%;
+    text-align: center;
+}
+.hotelcard{
+    background-color: #0394fc;
+    width: 50%;
+}
+.hotelcardheader,.departcardheader{
+    text-align: left;
+    font-size: 15px;
+    font-weight: 500;
+    border-bottom: 0px;
+}
+.departcard{
+    background-color: burlywood;
+    width: 50%;
+}
+.hotelcardright{
+    background: none;
+    border: none;
+}
+.homecontainer {
+    display: flex;
+  }
+
+  /* Column styles */
+  .homecolumn {
+    /* flex: 1; */
+    padding: 20px;
+  }
+
+  /* Row styles */
+  .homerow {
+    margin-bottom: 20px;
+    padding: 10px;
+  }
