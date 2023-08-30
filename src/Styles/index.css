@@ -80,6 +80,12 @@
     opacity: 1;
 }
 
+
+select::placeholder {
+  color:#9979f6;
+  opacity: 1;
+}
+
 .px-6{
     padding-right: 60px;padding-left: 60px;
 }
@@ -102,3 +108,17 @@
     color: #9979f6;
     
 }
+
+.hotel_IMG{
+  position: absolute;
+    top: 9%;
+    right: 20%;
+}
+
+.select-placeholder-text {
+  color:#9979f6;
+  }
+
+  .select_Drop{
+    border:'none'; border-bottom:'2px solid #9979f6;';width:'550px';border-radius:'0px'
+  }

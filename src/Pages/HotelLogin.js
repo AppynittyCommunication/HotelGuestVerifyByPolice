@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
-
+import loginIMG from "../Assets/img_hotel.png"
 
 export const HotelLogin = (props) => {
   const [husername, setHUsername] = useState('');
@@ -44,9 +44,9 @@ export const HotelLogin = (props) => {
   }
 
   return (
-    <div className="auth-form-container bg-gradient" style={{ height: '100%', paddingTop: '7%' }}>
-      <h3 style={{ color: '#fff', marginLeft: '10%' }}>Hotel Login</h3>
-      <form className='loginform' onSubmit={handleSubmit} style={{ marginLeft: '10%' }}>
+    <div className="auth-form-container bg-gradient" style={{ height: '100%', paddingTop: '8%' }}>
+      <h3 style={{ color: '#fff', marginLeft: '14%' }}>Hotel Login</h3>
+      <form className='loginform' onSubmit={handleSubmit} style={{ marginLeft: '14%' }}>
         <h3 style={{ color: '#9979f6' }}>LOGIN</h3>
         <div className="mb-3">
 
@@ -78,13 +78,16 @@ export const HotelLogin = (props) => {
                     Don't Have Account <a href="/HotelRegistration">Register?</a>
                 </p> */}
       </form>
-      <div style={{ marginLeft: '10%', paddingLeft: '10%', paddingTop: '2%' }}>
+      <div style={{ marginLeft: '14%', paddingLeft: '10%', paddingTop: '2%' }}>
         <Link to='/HotelRegistration'>    <button className="btn btn-primary" style={{ background: '#05356b', color: '#fff', borderColor: '#05356b', padding: '5px 35px' }}>
           Hotel Registration
         </button></Link>
         <p style={{ color: '#fff', paddingTop: '10px' }}>
           Click here for the hotel registration.
         </p>
+      </div>
+      <div className='hotel_IMG'>
+        <img src={loginIMG} style={{width:'500px'}}></img>
       </div>
     </div>
   )
