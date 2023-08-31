@@ -3,44 +3,26 @@ import { Link } from 'react-router-dom';
 import Select, { components } from 'react-select';
 import {GetStateRequest} from '../apis/Hotel_Services'
 import axios from 'axios';
-// export default class HotelRegistration extends Component {
- 
-  // render() {
-
-   export const HotelRegistration=()=>{
-    const [data, setData] = useState([]);
-    const [selectedOption, setSelectedOption] = useState(null);
- 
-
-
-    useEffect(() => {
-      getstate();
-    }, []);
-
-
-
-    const getstate = async () => {
-      try {
-        const res = await GetStateRequest(); // Assuming GetStateRequest returns a promise
-       console.log(res.data)
-        setData(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  
-   const option= data.map(function(data){
-   return {value:data.stateId,label: data.stateName}
-   })
-
-
-   const handleChange = selectedOption => {
-    setSelectedOption(selectedOption);
-    console.log('selected:',selectedOption)
-  };
-
-
-
+export default class HotelRegistration extends Component {
+  componentDidMount() {
+    GetStateRequest()
+        .then(res => {
+            this.setState({
+                cities: res.data
+            })
+            console.log("hello", res.data)
+        })
+   }
+  render() {
+    
+// const option=this.res.data.map(function(state){
+// return state.stateId
+// });
+// console.log(option)
+    // const getstate=async()=>{
+    //   await GetStateRequest().then(res=>{console.log(res.data)})
+    //   .catch(error =>{console.log(error)})
+    // }
     const State = [
       { value: 'chocolate', label: 'Chocolate' },
       { value: 'strawberry', label: 'Strawberry' },
@@ -125,14 +107,20 @@ import axios from 'axios';
             </span></p>
             <div className="mb-3 d-flex" >
            
-              <Select options={option} value={selectedOption}
-        onChange={handleChange} placeholder={<div className="select-placeholder-text">Select State</div>} styles={{
+              <Select options={State} placeholder={<div className="select-placeholder-text">Select State</div>} styles={{
                 control: (baseStyles) => ({
                   ...baseStyles,
                   border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px', marginRight: '80px'
                 }),
               }} />
-            
+             {/* <select value={selectedStateValue} onChange={this.handleSelectStateChange}>
+                  <option value="">Select an option</option>
+                  {stateListData.map(item => (
+                    <option key={item.stateId} value={item.stateId}>
+                      {item.stateName}
+                    </option>
+                  ))}
+            </select> */}
               <Select options={District} placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
                 control: (baseStyles) => ({
                   ...baseStyles,
