@@ -6,6 +6,7 @@ import axios from 'axios';
 
 export const HotelRegistration=()=>{
   const [data, setData] = useState([]);
+  const [disdata, setdisData] = useState([]);
   const [selectedStateOption, setSelectedStateOption] = useState(null);
   const [selectedDistOption, setSelectedDistOption] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +17,8 @@ export const HotelRegistration=()=>{
   }, []);
 
   useEffect(() => {
-    getDistList();
+   
+    getDistList()
   }, []);
 
   const getStateList = async () => {
@@ -33,7 +35,7 @@ export const HotelRegistration=()=>{
     try {
       const res = await getDistrictListRequest(head); // Assuming GetStateRequest returns a promise
      console.log(res.data)
-      setData(res.data);
+     setdisData(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +45,7 @@ export const HotelRegistration=()=>{
  return {value:data.stateId,label: data.stateName}
  })
 
- const distListOption= data.map(function(data){
+ const distListOption= disdata.map(function(data){
   return {value:data.distId,label: data.distName}
   })
 
@@ -54,10 +56,10 @@ export const HotelRegistration=()=>{
   getDistList(selectedStateOption.value);
 };
 
-// const handleDistChange = selectedDistOption => {
-//   setSelectedDistOption(selectedDistOption);
-//   console.log('Selected District: ',selectedDistOption)
-// }
+const handleDistChange = selectedDistOption => {
+  setSelectedDistOption(selectedDistOption);
+  console.log('Selected District: ',selectedDistOption)
+}
 
   const State = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -151,7 +153,7 @@ export const HotelRegistration=()=>{
               }),
             }} />
           
-            <Select options={distListOption} value={selectedDistOption}
+            <Select options={distListOption} value={selectedDistOption} onChange={handleDistChange}
             placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
               control: (baseStyles) => ({
                 ...baseStyles,
