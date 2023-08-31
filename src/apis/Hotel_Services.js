@@ -7,6 +7,7 @@ export const getStateListRequest = async()=>{
        headers: {
       
         'Content-Type': 'application/json',
+       'Access-Control-Allow-Origin': '*',
     }
     });
     return res

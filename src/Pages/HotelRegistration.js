@@ -40,7 +40,8 @@ export const HotelRegistration=()=>{
  const handleStateChange = selectedStateOption => {
   setSelectedStateOption(selectedStateOption);
  
-  console.log('Selected State:',selectedStateOption)
+  console.log('Selected State:',selectedStateOption.value)
+  getDistList(selectedStateOption);
 };
 useEffect(() => {
   if(selectedStateOption !== ''){
