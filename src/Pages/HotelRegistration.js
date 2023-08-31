@@ -1,10 +1,28 @@
-import React, { Component, CSSProperties } from 'react';
+import React, { Component, useEffect, useState  } from 'react';
 import { Link } from 'react-router-dom';
 import Select, { components } from 'react-select';
+import {GetStateRequest} from '../apis/Hotel_Services'
+import axios from 'axios';
 export default class HotelRegistration extends Component {
-
+  componentDidMount() {
+    GetStateRequest()
+        .then(res => {
+            this.setState({
+                cities: res.data
+            })
+            console.log("hello", res.data)
+        })
+   }
   render() {
-
+    
+// const option=this.res.data.map(function(state){
+// return state.stateId
+// });
+// console.log(option)
+    // const getstate=async()=>{
+    //   await GetStateRequest().then(res=>{console.log(res.data)})
+    //   .catch(error =>{console.log(error)})
+    // }
     const State = [
       { value: 'chocolate', label: 'Chocolate' },
       { value: 'strawberry', label: 'Strawberry' },
