@@ -1,24 +1,25 @@
 import React, {useEffect, useState , Component,  } from 'react';
 import { Link } from 'react-router-dom';
 import Select, { components } from 'react-select';
-import {GetStateRequest} from '../apis/Hotel_Services'
+import {getStateListRequest, getDistrictListRequest} from '../apis/Hotel_Services'
 import axios from 'axios';
 
 export const HotelRegistration=()=>{
   const [data, setData] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
-
+  const [selectedStateOption, setSelectedStateOption] = useState(null);
+  const [selectedDistOption, setSelectedDistOption] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   useEffect(() => {
-    getstate();
+    getStateList();
   }, []);
 
 
 
-  const getstate = async () => {
+  const getStateList = async () => {
     try {
-      const res = await GetStateRequest(); // Assuming GetStateRequest returns a promise
+      const res = await getStateListRequest(); // Assuming GetStateRequest returns a promise
      console.log(res.data)
       setData(res.data);
     } catch (error) {
@@ -26,17 +27,41 @@ export const HotelRegistration=()=>{
     }
   }
 
- const option= data.map(function(data){
+
+
+ const stateListOption= data.map(function(data){
  return {value:data.stateId,label: data.stateName}
  })
 
+ const distListOption= data.map(function(data){
+  return {value:data.distId,label: data.distName}
+  })
 
- const handleChange = selectedOption => {
-  setSelectedOption(selectedOption);
-  console.log('selected:',selectedOption)
+ const handleStateChange = selectedStateOption => {
+  setSelectedStateOption(selectedStateOption);
+ 
+  console.log('Selected State:',selectedStateOption)
 };
-
-
+useEffect(() => {
+  if(selectedStateOption !== ''){
+    setIsLoading(true);
+    getDistList(selectedStateOption);
+  }
+  
+}, []);
+const getDistList = async (selectedStateOption) => {
+  try {
+    const res = await getDistrictListRequest(selectedStateOption); // Assuming GetStateRequest returns a promise
+   console.log(res.data)
+    setData(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+// const handleDistChange = selectedDistOption => {
+//   setSelectedDistOption(selectedDistOption);
+//   console.log('Selected District: ',selectedDistOption)
+// }
 
   const State = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -122,15 +147,15 @@ export const HotelRegistration=()=>{
           </span></p>
           <div className="mb-3 d-flex" >
          
-            <Select options={option} value={selectedOption}
-      onChange={handleChange} placeholder={<div className="select-placeholder-text">Select State</div>} styles={{
+            <Select options={stateListOption} value={selectedStateOption}
+              onChange={handleStateChange} placeholder={<div className="select-placeholder-text">Select State</div>} styles={{
               control: (baseStyles) => ({
                 ...baseStyles,
                 border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px', marginRight: '80px'
               }),
             }} />
           
-            <Select options={District} placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
+            <Select options={distListOption} value={selectedDistOption} placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
               control: (baseStyles) => ({
                 ...baseStyles,
                 border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px'

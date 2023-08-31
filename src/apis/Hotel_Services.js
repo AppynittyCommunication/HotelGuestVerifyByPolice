@@ -1,9 +1,8 @@
 import axios from "axios";
 
-
-export const GetStateRequest = async()=>{
+export const getStateListRequest = async()=>{
     const res = await axios({
-       method:'get',
+       method:'GET',
        url:'https://hotelapi.ictsbm.com/api/SelectList/GetStates' ,
        headers: {
       
@@ -12,4 +11,15 @@ export const GetStateRequest = async()=>{
     });
     return res
   
+}
+
+export const getDistrictListRequest = async(selectedStateId)=>{
+    const res = await axios({
+        method:'GET',
+        headers: {
+            stateID: `${selectedStateId}`,
+        },
+        url:'https://hotelapi.ictsbm.com/api/SelectList/GetDistrict' ,
+     });
+     return res
 }
