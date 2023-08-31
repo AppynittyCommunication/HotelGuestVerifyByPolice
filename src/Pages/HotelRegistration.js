@@ -15,7 +15,9 @@ export const HotelRegistration=()=>{
     getStateList();
   }, []);
 
-
+  useEffect(() => {
+    getDistList();
+  }, []);
 
   const getStateList = async () => {
     try {
@@ -27,7 +29,15 @@ export const HotelRegistration=()=>{
     }
   }
 
-
+  const getDistList = async () => {
+    try {
+      const res = await getDistrictListRequest(); // Assuming GetStateRequest returns a promise
+     console.log(res.data)
+      setData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
  const stateListOption= data.map(function(data){
  return {value:data.stateId,label: data.stateName}
@@ -42,26 +52,11 @@ export const HotelRegistration=()=>{
  
   console.log('Selected State:',selectedStateOption)
 };
-useEffect(() => {
-  if(selectedStateOption !== ''){
-    setIsLoading(true);
-    getDistList(selectedStateOption);
-  }
-  
-}, []);
-const getDistList = async (selectedStateOption) => {
-  try {
-    const res = await getDistrictListRequest(selectedStateOption); // Assuming GetStateRequest returns a promise
-   console.log(res.data)
-    setData(res.data);
-  } catch (error) {
-    console.log(error);
-  }
+
+const handleDistChange = selectedDistOption => {
+  setSelectedDistOption(selectedDistOption);
+  console.log('Selected District: ',selectedDistOption)
 }
-// const handleDistChange = selectedDistOption => {
-//   setSelectedDistOption(selectedDistOption);
-//   console.log('Selected District: ',selectedDistOption)
-// }
 
   const State = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -155,7 +150,8 @@ const getDistList = async (selectedStateOption) => {
               }),
             }} />
           
-            <Select options={distListOption} value={selectedDistOption} placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
+            <Select options={distListOption} value={selectedDistOption}
+            onChange={handleDistChange} placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
               control: (baseStyles) => ({
                 ...baseStyles,
                 border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px'
