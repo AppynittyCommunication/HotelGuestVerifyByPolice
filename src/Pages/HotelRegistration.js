@@ -1,28 +1,46 @@
-import React, { Component, useEffect, useState  } from 'react';
+import React, {useEffect, useState , Component,  } from 'react';
 import { Link } from 'react-router-dom';
 import Select, { components } from 'react-select';
 import {GetStateRequest} from '../apis/Hotel_Services'
 import axios from 'axios';
-export default class HotelRegistration extends Component {
-  componentDidMount() {
-    GetStateRequest()
-        .then(res => {
-            this.setState({
-                cities: res.data
-            })
-            console.log("hello", res.data)
-        })
-   }
-  render() {
-    
-// const option=this.res.data.map(function(state){
-// return state.stateId
-// });
-// console.log(option)
-    // const getstate=async()=>{
-    //   await GetStateRequest().then(res=>{console.log(res.data)})
-    //   .catch(error =>{console.log(error)})
-    // }
+// export default class HotelRegistration extends Component {
+ 
+  // render() {
+
+   export const HotelRegistration=()=>{
+    const [data, setData] = useState([]);
+    const [selectedOption, setSelectedOption] = useState(null);
+ 
+
+
+    useEffect(() => {
+      getstate();
+    }, []);
+
+
+
+    const getstate = async () => {
+      try {
+        const res = await GetStateRequest(); // Assuming GetStateRequest returns a promise
+       console.log(res.data)
+        setData(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  
+   const option= data.map(function(data){
+   return {value:data.stateId,label: data.stateName}
+   })
+
+
+   const handleChange = selectedOption => {
+    setSelectedOption(selectedOption);
+    console.log('selected:',selectedOption)
+  };
+
+
+
     const State = [
       { value: 'chocolate', label: 'Chocolate' },
       { value: 'strawberry', label: 'Strawberry' },
@@ -107,7 +125,8 @@ export default class HotelRegistration extends Component {
             </span></p>
             <div className="mb-3 d-flex" >
            
-              <Select options={State} placeholder={<div className="select-placeholder-text">Select State</div>} styles={{
+              <Select options={option} value={selectedOption}
+        onChange={handleChange} placeholder={<div className="select-placeholder-text">Select State</div>} styles={{
                 control: (baseStyles) => ({
                   ...baseStyles,
                   border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px', marginRight: '80px'
@@ -167,6 +186,6 @@ export default class HotelRegistration extends Component {
             </p>
           </form></div></div>
     )
-  }
+  // }}
 }
 

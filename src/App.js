@@ -9,7 +9,7 @@ import About from './Pages/about';
 import DepartmentLogin from './Pages/DepartmentLogin';
 import DepartmentRegistration from "./Pages/DepartmentRegistration";
 import {HotelLogin} from "./Pages/HotelLogin";
-import HotelRegistration from "./Pages/HotelRegistration";
+import {HotelRegistration} from "./Pages/HotelRegistration";
 import HotelLoginSuccess from "./Pages/HotelLoginSuccess";
 
 function App() {
