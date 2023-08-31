@@ -14,11 +14,11 @@ export const getStateListRequest = async()=>{
   
 }
 
-export const getDistrictListRequest = async(selectedStateId)=>{
+export const getDistrictListRequest = async()=>{
     const res = await axios({
         method:'GET',
         headers: {
-            stateID: `${selectedStateId}`,
+            stateID: 12,
         },
         url:'https://hotelapi.ictsbm.com/api/SelectList/GetDistrict' ,
      });
