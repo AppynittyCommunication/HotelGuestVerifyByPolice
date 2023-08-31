@@ -4,15 +4,36 @@ import Select, { components } from 'react-select';
 import {GetStateRequest} from '../apis/Hotel_Services'
 import axios from 'axios';
 export default class HotelRegistration extends Component {
-  componentDidMount() {
-    GetStateRequest()
-        .then(res => {
-            this.setState({
-                cities: res.data
-            })
-            console.log("hello", res.data)
-        })
-   }
+
+    constructor(props) {
+      super(props);
+      this.state = {
+        stateListData: [],
+        selectedStateValue: ''
+      };
+    }
+
+    componentDidMount() {
+      fetch('https://hotelapi.ictsbm.com/api/SelectList/GetStates')
+        .then(response => response.json())
+        .then(stateListData => this.setState({ stateListData }))
+        .catch(error => console.error('Error fetching data:', error));
+    }
+  
+    handleSelectStateChange = selectedStateValue => {
+      this.setState({ selectedStateValue });
+      console.log('Selected name:', selectedStateValue.label);
+    };
+   
+  // componentDidMount() {
+  //   GetStateRequest()
+  //       .then(res => {
+  //           this.setState({
+  //               cities: res.data
+  //           })
+  //           console.log("hello", res.data)
+  //       })
+  //  }
   render() {
     
 // const option=this.res.data.map(function(state){
@@ -23,6 +44,14 @@ export default class HotelRegistration extends Component {
     //   await GetStateRequest().then(res=>{console.log(res.data)})
     //   .catch(error =>{console.log(error)})
     // }
+
+    const { stateListData, selectedStateValue } = this.state;
+    
+    const stateListOptions = stateListData.map(item => ({
+      value: item.stateId,
+      label: item.stateName
+    }));
+
     const State = [
       { value: 'chocolate', label: 'Chocolate' },
       { value: 'strawberry', label: 'Strawberry' },
@@ -107,13 +136,20 @@ export default class HotelRegistration extends Component {
             </span></p>
             <div className="mb-3 d-flex" >
            
-              <Select options={State} placeholder={<div className="select-placeholder-text">Select State</div>} styles={{
+              <Select value={selectedStateValue} onChange={this.handleSelectStateChange} options={stateListOptions} placeholder={<div className="select-placeholder-text">Select State</div>} styles={{
                 control: (baseStyles) => ({
                   ...baseStyles,
                   border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px', marginRight: '80px'
                 }),
               }} />
-            
+             {/* <select value={selectedStateValue} onChange={this.handleSelectStateChange}>
+                  <option value="">Select an option</option>
+                  {stateListData.map(item => (
+                    <option key={item.stateId} value={item.stateId}>
+                      {item.stateName}
+                    </option>
+                  ))}
+            </select> */}
               <Select options={District} placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
                 control: (baseStyles) => ({
                   ...baseStyles,
