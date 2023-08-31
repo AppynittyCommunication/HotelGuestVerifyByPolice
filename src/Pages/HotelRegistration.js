@@ -29,9 +29,9 @@ export const HotelRegistration=()=>{
     }
   }
 
-  const getDistList = async () => {
+  const getDistList = async (head) => {
     try {
-      const res = await getDistrictListRequest(); // Assuming GetStateRequest returns a promise
+      const res = await getDistrictListRequest(head); // Assuming GetStateRequest returns a promise
      console.log(res.data)
       setData(res.data);
     } catch (error) {
@@ -51,13 +51,13 @@ export const HotelRegistration=()=>{
   setSelectedStateOption(selectedStateOption);
  
   console.log('Selected State:',selectedStateOption.value)
-  getDistList(selectedStateOption);
+  getDistList(selectedStateOption.value);
 };
 
-const handleDistChange = selectedDistOption => {
-  setSelectedDistOption(selectedDistOption);
-  console.log('Selected District: ',selectedDistOption)
-}
+// const handleDistChange = selectedDistOption => {
+//   setSelectedDistOption(selectedDistOption);
+//   console.log('Selected District: ',selectedDistOption)
+// }
 
   const State = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -152,7 +152,7 @@ const handleDistChange = selectedDistOption => {
             }} />
           
             <Select options={distListOption} value={selectedDistOption}
-            onChange={handleDistChange} placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
+            placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
               control: (baseStyles) => ({
                 ...baseStyles,
                 border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px'

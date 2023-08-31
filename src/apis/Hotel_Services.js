@@ -2,23 +2,23 @@ import axios from "axios";
 
 export const getStateListRequest = async()=>{
     const res = await axios({
-       method:'GET',
+       method:'POST',
        url:'https://hotelapi.ictsbm.com/api/SelectList/GetStates' ,
        headers: {
       
         'Content-Type': 'application/json',
-       'Access-Control-Allow-Origin': '*',
+      
     }
     });
     return res
   
 }
 
-export const getDistrictListRequest = async()=>{
+export const getDistrictListRequest = async(head)=>{
     const res = await axios({
-        method:'GET',
+        method:'POST',
         headers: {
-            stateID: 12,
+            stateID: head,
         },
         url:'https://hotelapi.ictsbm.com/api/SelectList/GetDistrict' ,
      });
