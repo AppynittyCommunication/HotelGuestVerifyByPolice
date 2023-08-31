@@ -53,6 +53,7 @@ export const HotelRegistration=()=>{
  
   console.log('Selected State:',selectedStateOption.value)
   getDistList(selectedStateOption.value);
+  setSelectedDistOption('');
 };
 
 const handleDistChange = selectedDistOption => {
