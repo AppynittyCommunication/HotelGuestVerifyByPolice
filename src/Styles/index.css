@@ -122,3 +122,5 @@ select::placeholder {
   .select_Drop{
     border:'none'; border-bottom:'2px solid #9979f6;';width:'550px';border-radius:'0px'
   }
+
+  .css-1dimb5e-singleValue{color: #9979f6 !important;}
