@@ -5,7 +5,8 @@ import {getStateListRequest, getDistrictListRequest} from '../apis/Hotel_Service
 import axios from 'axios';
 
 export const HotelRegistration=()=>{
-  const [data, setData] = useState([]);
+  const [stateData, setStateData] = useState([]);
+  const [distData, setDistData] = useState([]);
   const [selectedStateOption, setSelectedStateOption] = useState(null);
   const [selectedDistOption, setSelectedDistOption] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +24,7 @@ export const HotelRegistration=()=>{
     try {
       const res = await getStateListRequest(); // Assuming GetStateRequest returns a promise
      console.log(res.data)
-      setData(res.data);
+      setStateData(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -33,17 +34,17 @@ export const HotelRegistration=()=>{
     try {
       const res = await getDistrictListRequest(head); // Assuming GetStateRequest returns a promise
      console.log(res.data)
-      setData(res.data);
+     setDistData(res.data);
     } catch (error) {
       console.log(error);
     }
   }
 
- const stateListOption= data.map(function(data){
+ const stateListOption= stateData.map(function(data){
  return {value:data.stateId,label: data.stateName}
  })
 
- const distListOption= data.map(function(data){
+ const distListOption= distData.map(function(data){
   return {value:data.distId,label: data.distName}
   })
 
@@ -54,10 +55,10 @@ export const HotelRegistration=()=>{
   getDistList(selectedStateOption.value);
 };
 
-// const handleDistChange = selectedDistOption => {
-//   setSelectedDistOption(selectedDistOption);
-//   console.log('Selected District: ',selectedDistOption)
-// }
+const handleDistChange = selectedDistOption => {
+  setSelectedDistOption(selectedDistOption);
+  console.log('Selected District: ',selectedDistOption)
+}
 
   const State = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -152,7 +153,7 @@ export const HotelRegistration=()=>{
             }} />
           
             <Select options={distListOption} value={selectedDistOption}
-            placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
+            onChange={handleDistChange} placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
               control: (baseStyles) => ({
                 ...baseStyles,
                 border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px'
