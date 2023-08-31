@@ -1,14 +1,18 @@
-import React, {useEffect, useState , Component,  } from 'react';
+import React, { useEffect, useState, Component, } from 'react';
 import { Link } from 'react-router-dom';
 import Select, { components } from 'react-select';
-import {getStateListRequest, getDistrictListRequest} from '../apis/Hotel_Services'
+import { getStateListRequest, getDistrictListRequest, getCityListRequest,getPoliceStationListRequest } from '../apis/Hotel_Services'
 import axios from 'axios';
 
-export const HotelRegistration=()=>{
+export const HotelRegistration = () => {
   const [stateData, setStateData] = useState([]);
   const [distData, setDistData] = useState([]);
+  const [cityData, setCityData] = useState([]);
+  const [psData, setPsData] = useState([]);
   const [selectedStateOption, setSelectedStateOption] = useState(null);
   const [selectedDistOption, setSelectedDistOption] = useState(null);
+  const [selectedCityOption, setSelectedCityOption] = useState(null);
+  const [selectedPsOption, setSelectedPsOption] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -16,72 +20,85 @@ export const HotelRegistration=()=>{
     getStateList();
   }, []);
 
-  useEffect(() => {
-   
-    getDistList()
-  }, []);
+  // useEffect(() => {
+
+  //   getDistList()
+  // }, []);
 
   const getStateList = async () => {
     try {
       const res = await getStateListRequest(); // Assuming GetStateRequest returns a promise
-     console.log(res.data)
+      console.log(res.data)
       setStateData(res.data);
     } catch (error) {
       console.log(error);
     }
   }
 
-  const getDistList = async (head) => {
+  const getDistList = async (stateID) => {
     try {
-      const res = await getDistrictListRequest(head); // Assuming GetStateRequest returns a promise
-     console.log(res.data)
-     setDistData(res.data);
+      const res = await getDistrictListRequest(stateID); // Assuming GetStateRequest returns a promise
+      console.log(res.data)
+      setDistData(res.data);
     } catch (error) {
       console.log(error);
     }
   }
-
- const stateListOption= stateData.map(function(data){
- return {value:data.stateId,label: data.stateName}
- })
-
- const distListOption= distData.map(function(data){
-  return {value:data.distId,label: data.distName}
+  const getCityList = async (stateID, distID) => {
+    try {
+      const res = await getCityListRequest(stateID, distID); // Assuming GetStateRequest returns a promise
+      console.log(res.data)
+      setCityData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const getPsList = async (stateID, distID,cityData) => {
+    try {
+      const res = await getPoliceStationListRequest(stateID, distID,cityData); // Assuming GetStateRequest returns a promise
+      console.log(res.data)
+      setPsData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const stateListOption = stateData.map(function (data) {
+    return { value: data.stateId, label: data.stateName }
   })
 
- const handleStateChange = selectedStateOption => {
-  setSelectedStateOption(selectedStateOption);
- 
-  console.log('Selected State:',selectedStateOption.value)
-  getDistList(selectedStateOption.value);
-  setSelectedDistOption('');
-};
+  const distListOption = distData.map(function (data) {
+    return { value: data.distId, label: data.distName }
+  })
+  const cityListOption = cityData.map(function (data) {
+    return { value: data.cityId, label: data.cityName }
+  })
+  const psListOption = psData.map(function (data) {
+    return { value: data.stationID, label: data.stationName }
+  })
+  const handleStateChange = selectedStateOption => {
+    setSelectedStateOption(selectedStateOption);
 
-const handleDistChange = selectedDistOption => {
-  setSelectedDistOption(selectedDistOption);
-  console.log('Selected District: ',selectedDistOption)
-}
+    console.log('Selected State:', selectedStateOption.value)
+    getDistList(selectedStateOption.value);
+    setSelectedDistOption('');
+  };
 
-  const State = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ];
-  const  District = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ];
-  const City = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ];
-  const Police_Station = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ];
+  const handleDistChange = selectedDistOption => {
+    setSelectedDistOption(selectedDistOption);
+    getCityList(selectedStateOption.value, selectedDistOption.value);
+    setSelectedCityOption('');
+    console.log('Selected City: ', selectedDistOption.value)
+  }
+  const handleCityChange = selectedCityOption => {
+    setSelectedCityOption(selectedCityOption);
+    getPsList(selectedStateOption.value,selectedDistOption.value,selectedCityOption.value);
+    setSelectedPsOption('');
+  }
+
+  const handlePsChange = selectedPsOption => {
+    setSelectedPsOption(selectedPsOption);
+    
+  }
   return (
     <div style={{ background: '#ebebeb', paddingTop: '1px', height: '100%' }}>
       <div className='px-6 nav-bg' style={{ width: '100%', height: '60px' }}>
@@ -145,34 +162,36 @@ const handleDistChange = selectedDistOption => {
           <p className='d-flex justify-content-end'><span style={{ color: 'red', fontSize: '12px' }}>Use My Current Location
           </span></p>
           <div className="mb-3 d-flex" >
-         
+
             <Select options={stateListOption} value={selectedStateOption}
               onChange={handleStateChange} placeholder={<div className="select-placeholder-text">Select State</div>} styles={{
-              control: (baseStyles) => ({
-                ...baseStyles,
-                border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px', marginRight: '80px'
-              }),
-            }} />
-          
+                control: (baseStyles) => ({
+                  ...baseStyles,
+                  border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px', marginRight: '80px'
+                }),
+              }} />
+
             <Select options={distListOption} value={selectedDistOption}
-            onChange={handleDistChange} placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
-              control: (baseStyles) => ({
-                ...baseStyles,
-                border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px'
-              }),
-            }} />
+              onChange={handleDistChange} placeholder={<div className="select-placeholder-text">Select District</div>} styles={{
+                control: (baseStyles) => ({
+                  ...baseStyles,
+                  border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px'
+                }),
+              }} />
           </div>
           <div className="mb-3 d-flex" >
-            
-            <Select options={City} placeholder={<div className="select-placeholder-text">Select City</div>} styles={{
-              control: (baseStyles) => ({
-                ...baseStyles,
-                border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px', marginRight: '80px'
-              }),
-            }} />
-            
 
-            <Select options={Police_Station} placeholder={<div className="select-placeholder-text">Select Police Station</div>} styles={{
+            <Select options={cityListOption} value={selectedCityOption}
+              onChange={handleCityChange} placeholder={<div className="select-placeholder-text">Select City</div>} styles={{
+                control: (baseStyles) => ({
+                  ...baseStyles,
+                  border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px', marginRight: '80px'
+                }),
+              }} />
+
+
+            <Select options={psListOption} value={selectedPsOption}
+              onChange={handlePsChange} placeholder={<div className="select-placeholder-text">Select Police Station</div>} styles={{
               control: (baseStyles) => ({
                 ...baseStyles,
                 border: 'none', borderBottom: '2px solid #9979f6;', width: '520px', borderRadius: '0px',
@@ -208,7 +227,7 @@ const handleDistChange = selectedDistOption => {
           </p>
         </form></div></div>
   )
-// }}
+  // }}
 }
 
 
